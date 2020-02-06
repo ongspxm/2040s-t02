@@ -77,9 +77,58 @@ Okay it struck me that I just covered the naive method above without going in de
 
 Let's look at some code first before I go explaining what I am trying to do here.
 
-```
 
 ```
+// NOTE: For simplicity, we are gonna assume N is in the form 2^c
+Queue<Obj> original, extra;
+
+int count = 1;
+while (count < N) {
+    // QNS: how many rounds do we need?
+    for (int r=0; r<N/(2*count); r++) {
+        for (int i=0; i<count; i++) {
+            extra.push(original.pop());
+        }
+
+        // NOTE: !!! LOOK HERE MERGE SORT !!!
+        for (int i=0; i<count*2; i++) {
+            if (extra.head() < original.head()) {
+                original.push(extra.pop());
+            } else {
+                original.push(original.pop());
+            }
+        }
+    }
+
+    count *= 2;
+} 
+```
+
+So roughly to explain the code: We do merge sort, but bottom up. Trace the program, and you will find out how it works.
+
+On the first round, you push one other element to the extra queue. Now you compare the two head values, and put the smaller one in first. **TADA** now you have a small portion (2 items) of the queue sorted. (right at the end of the original queue)
+
+When everything is done for the first round, we do the same thing, but this time `count==2`. Ask yourself? what does this mean?
+
+Everytime now, we are pushing 2 values into the extra queue, and from the previous step, we are sure that they are in the right order. So after we compare them and push them back into the original queue the mergesort way, we can be sure of one thing. The elements at the end of the original queue will be sorted (4 items by 4 items).
+
+And here, I am sure you can see how the keyword mergesort comes in. If you don't, it just means you are not trying hard enough. TRY HARDER.
+
+But yeah, this solution is pretty big brain. And just like what I have mentioned in class, think about what is required for you to ultilize such a sorting method (mergesort).
 
 ## spies qns (just the proof)
-## minimum of queue
+Okay, so in class, I have mentioned how this question can be simplified into another parallel question. In class, I see a few nodding heads, but I am sure you are just doing it for show :(
+
+So here is how it is done, the analysis.
+
+So we know that `log(1024c17)/log(2) = 122` approximately. What does this mean? In class, we covered the intuition, basically what this means is that you can generate `2^122` possible combinations of spies.
+
+And how do we decide a mission? We can clearly do so in O(1) time. Remember? union of all the members in each suspicious set?
+
+So what does that mean, it means that now we have `2^122` and we want to find the right one, how do we do that in the least steps?
+
+First, we send the first half to the mission(`2^121` students), this will tell us if the spy set is in the first or second half. Then you send the suspected `2^120` sets. So on and so forth. Do you see how this is binary search? BIG BRAIN
+
+**KEY TAKEAWAY** we might be evil and set hard question, but we are reasonable people, there is always so way of simplifying the problems we give you into things that we have taught you, or "casually mention" in class.
+
+## end
