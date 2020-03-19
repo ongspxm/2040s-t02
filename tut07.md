@@ -1,7 +1,7 @@
 # tutorial 7 week 9
 Okay this week's tutorial is a bit rush. So i couldnt go through everything fully. 
 
-## 1 heapify in O(n)
+## question 1 heapify in O(n)
 This week's tutorial focused a lot on graph, and not much on heap. But **heaps are pretty interesting data structures**.
 
 heapify can be **done in linear runtime** is a interesting proof and it follows as so. Take a binary heap for example, i.e one parent, two child. How many edge will that heap have? Okay lets keep that in mind first. **The number of edges matter**.
@@ -14,7 +14,7 @@ So we just need to **check each parent child relation only once**, and that is e
 
 U can **imagine each edge as pointing to the parent**. Each node can only have one parent. And there are total of n node, therefore, **max n edges total**.
 
-## 7c the graph job problem
+## question 7c the graph job problem
 Okay so there is a **few typos in this solution**.
 
 ### edge added if NOT overlap
